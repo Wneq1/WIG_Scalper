@@ -1,4 +1,4 @@
-# WIG Scalper - System Handlowy v2.0 🚀
+# WIG Scalper - System Handlowy v2.3 🚀
 
 Profesjonalna platforma analityczna dla indeksu **sWIG80** (small caps) oraz szerokiego rynku GPW. Aplikacja łączy w sobie automatyczne pobieranie danych, zaawansowaną wizualizację (Heatmapa, Wykresy) oraz nowoczesny interfejs w trybie Dark Mode.
 
@@ -6,8 +6,15 @@ Profesjonalna platforma analityczna dla indeksu **sWIG80** (small caps) oraz sze
 ![License](https://img.shields.io/badge/license-MIT-green.svg)
 ![Status](https://img.shields.io/badge/status-production-active.svg)
 
-## 🌟 Nowości w wersji 2.0
+## 🌟 Nowości w wersji 2.3
 
+- **Nagłówek Live (Header Stats)**:
+    - Wyświetlanie ceny **sWIG80tr** (ETF Beta) w czasie rzeczywistym.
+    - Zmiana procentowa (kolorowana dynamicznie).
+    - Cena Otwarcia, Poprzednie Zamknięcie, Średnia.
+- **Całkowity Obrót (Turnover)**:
+    - Sumaryczny obrót wszystkich 80 spółek indeksu.
+    - Wyrażony w **mln PLN** (aktualizowany na bieżąco).
 - **Nowoczesny UI (Dark Theme)**: Spójny, profesjonalny ciemny motyw (`#2b2b2b`).
 - **3 Dedykowane Zakładki**:
     1.  **Skład Indeksu**: Tabela wszystkich spółek + Wykres "Top 10" (kolorowany sektorowo).
@@ -87,5 +94,5 @@ Projekt rozwijany przez **Wneq1**.
 Skupiony na analizie technicznej i fundamentalnej polskich spółek giełdowych.
 
 ---
-**Wersja:** 2.0 (Premium)
+**Wersja:** 2.3 (Premium)
 **Data ostatniej aktualizacji:** 2026-01-28

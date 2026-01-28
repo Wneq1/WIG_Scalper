@@ -169,6 +169,7 @@ class MarketDataFetcher(threading.Thread):
                         last_row = df.iloc[-1]
                         price = float(last_row['Close'])
                         open_price = float(last_row['Open'])
+                        volume = float(last_row['Volume'])
                         
                         if open_price > 0:
                             change_pct = ((price - open_price) / open_price) * 100.0
@@ -183,6 +184,7 @@ class MarketDataFetcher(threading.Thread):
                     if price > 0:
                         c['price'] = price
                         c['change_pct'] = change_pct
+                        c['turnover'] = price * volume # Approximate daily turnover (Val * Vol)
             
             # 4. Save back to DB
             # We use save_portfolio_snapshot to dump the updated state

@@ -32,6 +32,7 @@ def init_db():
             share REAL,
             price REAL,
             change_pct REAL,
+            turnover REAL,
             updated_at TIMESTAMP
         )
     ''')
@@ -44,6 +45,11 @@ def init_db():
         
     try:
         c.execute('ALTER TABLE portfolio ADD COLUMN change_pct REAL')
+    except sqlite3.OperationalError:
+        pass
+
+    try:
+        c.execute('ALTER TABLE portfolio ADD COLUMN turnover REAL')
     except sqlite3.OperationalError:
         pass
 
@@ -108,7 +114,7 @@ def save_portfolio_snapshot(data_list):
     """
     Saves the full portfolio list to DB.
     Replaces existing cache (we assume we want the current state).
-    data_list: list of dicts {'ticker': ..., 'share': ..., 'price': ..., 'change_pct': ...}
+    data_list: list of dicts {'ticker': ..., 'share': ..., 'price': ..., 'change_pct': ..., 'turnover': ...}
     """
     conn = get_connection()
     c = conn.cursor()
@@ -124,12 +130,13 @@ def save_portfolio_snapshot(data_list):
             item.get('share', 0.0), 
             item.get('price', 0.0), 
             item.get('change_pct', 0.0), 
+            item.get('turnover', 0.0),
             now
         ))
         
     c.executemany('''
-        INSERT INTO portfolio (ticker, share, price, change_pct, updated_at)
-        VALUES (?, ?, ?, ?, ?)
+        INSERT INTO portfolio (ticker, share, price, change_pct, turnover, updated_at)
+        VALUES (?, ?, ?, ?, ?, ?)
     ''', params)
     
     conn.commit()
@@ -138,14 +145,14 @@ def save_portfolio_snapshot(data_list):
 def load_portfolio_from_db():
     """
     Loads portfolio from DB and joins with sectors.
-    Returns list of dicts: {'ticker', 'share', 'sector', 'price', 'change_pct'}
+    Returns list of dicts: {'ticker', 'share', 'sector', 'price', 'change_pct', 'turnover'}
     """
     conn = get_connection()
     c = conn.cursor()
     
     # Left join to get sectors if available
     c.execute('''
-        SELECT p.ticker, p.share, p.price, p.change_pct, c.sector 
+        SELECT p.ticker, p.share, p.price, p.change_pct, p.turnover, c.sector 
         FROM portfolio p
         LEFT JOIN companies c ON p.ticker = c.ticker
     ''')
@@ -159,6 +166,7 @@ def load_portfolio_from_db():
             'share': r['share'],
             'price': r['price'] if r['price'] else 0.0,
             'change_pct': r['change_pct'] if r['change_pct'] else 0.0,
+            'turnover': r['turnover'] if r['turnover'] else 0.0,
             'sector': r['sector'] if r['sector'] else 'Inne / Nieznany'
         })
     return result

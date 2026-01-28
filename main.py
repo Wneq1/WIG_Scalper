@@ -59,6 +59,135 @@ def main():
     root.title("WIG Scalper - System Handlowy")
     root.geometry("1400x900")
     root.configure(bg="#2b2b2b")
+
+    # --- LOGO & HEADER ---
+    try:
+        from PIL import Image, ImageTk
+        import os
+        
+        logo_path = "LOGO.png"
+        if os.path.exists(logo_path):
+            # 1. Load Image
+            pil_img = Image.open(logo_path)
+            
+            # 2. Set Window Icon (Taskbar)
+            icon_photo = ImageTk.PhotoImage(pil_img)
+            root.iconphoto(True, icon_photo)
+            
+            # 3. Create Header Frame
+            header_frame = tk.Frame(root, bg="#2b2b2b")
+            header_frame.pack(side=tk.TOP, fill=tk.X, padx=15, pady=10)
+            
+            # 4. Resize for Header UI (Keep Aspect Ratio)
+            ui_img = pil_img.copy()
+            ui_img.thumbnail((56, 56), Image.Resampling.LANCZOS) # Slightly smaller to fit frame
+            ui_photo = ImageTk.PhotoImage(ui_img)
+            
+            # Styled "Icon Frame" to make it look like a badge
+            icon_frame = tk.Frame(header_frame, bg="#2b2b2b", highlightbackground="#444", highlightthickness=2, highlightcolor="#444")
+            icon_frame.pack(side=tk.LEFT, padx=(0, 15))
+            
+            logo_label = tk.Label(icon_frame, image=ui_photo, bg="#2b2b2b")
+            logo_label.image = ui_photo # keep ref
+            logo_label.pack(padx=2, pady=2)
+            
+            # 5. Application Title next to Logo
+            app_title = tk.Label(header_frame, text="sWIG80tr", font=('Helvetica', 22, 'bold'), fg="white", bg="#2b2b2b")
+            app_title.pack(side=tk.LEFT, padx=(0, 20))
+            
+            # --- HEADER STATS (Left Side, next to title) ---
+            stats_frame = tk.Frame(header_frame, bg="#2b2b2b")
+            stats_frame.pack(side=tk.LEFT)
+            
+            # Labels for stats (Horizontal Layout)
+            # "Cena:" Label on White
+            lbl_price_title = tk.Label(stats_frame, text="Cena:", font=('Helvetica', 14), fg="white", bg="#2b2b2b")
+            lbl_price_title.pack(side=tk.LEFT, padx=(0, 5))
+
+            lbl_index_price = tk.Label(stats_frame, text="...", font=('Helvetica', 22, 'bold'), fg="#ddd", bg="#2b2b2b")
+            lbl_index_price.pack(side=tk.LEFT, padx=(0, 15))
+            
+            lbl_index_change = tk.Label(stats_frame, text="...", font=('Helvetica', 16, 'bold'), fg="white", bg="#2b2b2b")
+            lbl_index_change.pack(side=tk.LEFT, padx=(0, 20))
+            
+            # Additional Details: Open, Prev Close, Avg
+            lbl_index_extended = tk.Label(stats_frame, text="...", font=('Helvetica', 11), fg="#aaa", bg="#2b2b2b")
+            lbl_index_extended.pack(side=tk.LEFT, padx=(0, 20))
+            
+            # --- TURNOVER (Obrót) ---
+            # "Obrót:" Label on White
+            lbl_turnover = tk.Label(stats_frame, text="Obrót: ...", font=('Helvetica', 14, 'bold'), fg="white", bg="#2b2b2b") 
+            lbl_turnover.pack(side=tk.LEFT, padx=(0, 0))
+            
+            print(">>> [GUI] Logo loaded successfully.")
+
+            # Function to update header stats
+            def update_idx_stats():
+                try:
+                    # 1. Update Index/ETF Stats
+                    import yfinance as yf
+                    ticker = "ETFBS80TR.WA"
+                    # Fetch 5d to ensure we have previous close
+                    data = yf.Ticker(ticker).history(period="5d")
+                    
+                    if not data.empty:
+                        last = data.iloc[-1]
+                        price = last['Close']
+                        open_p = last['Open']
+                        high_p = last['High']
+                        low_p = last['Low']
+                        
+                        # Average (Typical Price)
+                        avg_p = (high_p + low_p + price) / 3.0
+                        
+                        # Previous Close (if available)
+                        prev_close = open_p # Default fallback
+                        if len(data) >= 2:
+                            prev_close = data.iloc[-2]['Close']
+                        
+                        # Calculate change vs Previous Close (Standard)
+                        change_pct = 0.0
+                        if prev_close > 0:
+                            change_pct = ((price - prev_close) / prev_close) * 100.0
+                        
+                        # Color
+                        color = "#00ff00" if change_pct >= 0 else "#ff4444"
+                        sign = "+" if change_pct >= 0 else ""
+                        
+                        # Formatting
+                        formatted_price = f"{price:,.2f}".replace(",", " ")
+                        lbl_index_price.config(text=f"{formatted_price} PLN")
+                        lbl_index_change.config(text=f"{sign}{change_pct:.2f}%", fg=color)
+                        
+                        # Extended info
+                        lbl_index_extended.config(
+                            text=f"Otw: {open_p:.2f}  |  Zam: {prev_close:.2f}  |  Śr: {avg_p:.2f}"
+                        )
+                        
+                    # 2. Update Total Turnover (Sum of all companies)
+                    # We read directly from DB as it is updated by MarketDataFetcher thread
+                    from database import load_portfolio_from_db
+                    portfolio = load_portfolio_from_db()
+                    total_turnover = sum(c.get('turnover', 0.0) for c in portfolio)
+                    
+                    # Format to mln PLN
+                    turnover_mln = total_turnover / 1_000_000.0
+                    lbl_turnover.config(text=f"Obrót: {turnover_mln:.1f} mln PLN")
+                    
+                except Exception as e:
+                    print(f"Index Stats Error: {e}")
+                
+                # Update every 60s
+                root.after(60000, update_idx_stats)
+            
+            # Start updating
+            root.after(1000, update_idx_stats)
+
+        else:
+            print(f">>> [GUI] Logo file not found: {logo_path}")
+            
+    except Exception as e:
+        print(f"Error checking requirements or loading logo: {e}")
     
     # --- STYLING ---
     style = ttk.Style()
