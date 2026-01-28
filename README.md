@@ -29,13 +29,24 @@ Profesjonalna platforma analityczna dla indeksu **sWIG80** (small caps) oraz sze
 ## 📸 Interfejs
 
 ### 1. Skład Indeksu
-*Pełna lista spółek połączona z wykresem liderów.*
+Pełna lista spółek połączona z wykresem liderów. Tabelaryczny podgląd cen i zmian procentowych.
+
+![Skład Indeksu - Screenshot](https://via.placeholder.com/800x450?text=Tu+Wstaw+Screenshot+Skladu+Indeksu)
+*(Miejsce na Twój screenshot)*
 
 ### 2. Sektory
-*Analiza strukturalna - które branże rządzą rynkiem (Banki, Budownictwo, Gaming).*
+Analiza strukturalna - które branże rządzą rynkiem (Banki, Budownictwo, Gaming). Lewa strona to wykres kołowy, prawa to szczegółowa lista.
 
-### 3. Heatmapa
-*Szybki rzut oka na cały rynek - wielkość kafelka to udział w indeksie, kolor to zmiana ceny.*
+![Sektory - Screenshot](https://via.placeholder.com/800x450?text=Tu+Wstaw+Screenshot+Sektorow)
+*(Miejsce na Twój screenshot)*
+
+### 3. Heatmapa (Nowość!)
+Pełnoekranowa **Mapa Rynku**.
+- **Wielkość kafelka**: Udział spółki w indeksie (Waga).
+- **Kolor**: Zmiana ceny (Zielony = Wzrost, Czerwony = Spadek).
+
+![Heatmapa - Screenshot](https://via.placeholder.com/800x450?text=Tu+Wstaw+Screenshot+Heatmapy)
+*(Miejsce na Twój screenshot)*
 
 ## 🚀 Instalacja i Uruchomienie
 
