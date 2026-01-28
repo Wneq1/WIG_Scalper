@@ -31,13 +31,15 @@ Profesjonalna platforma analityczna dla indeksu **sWIG80** (small caps) oraz sze
 ### 1. Skład Indeksu
 Pełna lista spółek połączona z wykresem liderów. Tabelaryczny podgląd cen i zmian procentowych.
 
-![Skład Indeksu - Screenshot](https://via.placeholder.com/800x450?text=Tu+Wstaw+Screenshot+Skladu+Indeksu)
+<img width="1396" height="925" alt="image" src="https://github.com/user-attachments/assets/41727d51-bd28-4033-92c1-8cd7bbc90c9c" />
+
 *(Miejsce na Twój screenshot)*
 
 ### 2. Sektory
 Analiza strukturalna - które branże rządzą rynkiem (Banki, Budownictwo, Gaming). Lewa strona to wykres kołowy, prawa to szczegółowa lista.
 
-![Sektory - Screenshot](https://via.placeholder.com/800x450?text=Tu+Wstaw+Screenshot+Sektorow)
+<img width="1396" height="930" alt="image" src="https://github.com/user-attachments/assets/87a7258d-3f12-4dd9-a347-dd71b12578a2" />
+
 *(Miejsce na Twój screenshot)*
 
 ### 3. Heatmapa (Nowość!)
@@ -45,7 +47,8 @@ Pełnoekranowa **Mapa Rynku**.
 - **Wielkość kafelka**: Udział spółki w indeksie (Waga).
 - **Kolor**: Zmiana ceny (Zielony = Wzrost, Czerwony = Spadek).
 
-![Heatmapa - Screenshot](https://via.placeholder.com/800x450?text=Tu+Wstaw+Screenshot+Heatmapy)
+<img width="1396" height="924" alt="image" src="https://github.com/user-attachments/assets/cec98b40-8a5a-46a0-ace4-c00f071c9776" />
+
 *(Miejsce na Twój screenshot)*
 
 ## 🚀 Instalacja i Uruchomienie
