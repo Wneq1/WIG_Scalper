@@ -1,206 +1,80 @@
-# WIG sWIG80 Analyzer 📊
+# WIG Scalper - System Handlowy v2.0 🚀
 
-Aplikacja do analizy składu indeksu **sWIG80** z automatycznym pobieraniem danych z GPW Benchmark, klasyfikacją sektorową spółek oraz wizualizacją w formie wykresów kołowych.
+Profesjonalna platforma analityczna dla indeksu **sWIG80** (small caps) oraz szerokiego rynku GPW. Aplikacja łączy w sobie automatyczne pobieranie danych, zaawansowaną wizualizację (Heatmapa, Wykresy) oraz nowoczesny interfejs w trybie Dark Mode.
 
-![Python](https://img.shields.io/badge/python-3.8+-blue.svg)
+![Python](https://img.shields.io/badge/python-3.10+-blue.svg)
 ![License](https://img.shields.io/badge/license-MIT-green.svg)
+![Status](https://img.shields.io/badge/status-production-active.svg)
 
-## 🎯 Funkcje
+## 🌟 Nowości w wersji 2.0
 
-- **Automatyczne pobieranie danych** z GPW Benchmark (https://gpwbenchmark.pl)
-- **Inteligentne cachowanie** - dane odświeżane tylko po kwartalnych rewizjach (marzec, czerwiec, wrzesień, grudzień)
-- **Klasyfikacja sektorowa** spółek z wykorzystaniem:
-  - Bazy danych SQLite (cache)
-  - Live scraping z BiznesRadar
-  - Statycznych mapowań dla znanych przypadków
-- **Wizualizacja danych**:
-  - Wykres kołowy TOP spółek wg udziału w portfelu
-  - Wykres kołowy podziału wg sektorów
-  - Tabele z pełną listą spółek i rankingiem sektorów
-- **Dark Mode** - nowoczesny ciemny motyw interfejsu
+- **Nowoczesny UI (Dark Theme)**: Spójny, profesjonalny ciemny motyw (`#2b2b2b`).
+- **3 Dedykowane Zakładki**:
+    1.  **Skład Indeksu**: Tabela wszystkich spółek + Wykres "Top 10" (kolorowany sektorowo).
+    2.  **Sektory**: Struktura całego indeksu + Tabela spółek posortowana sektorami.
+    3.  **Heatmapa**: Pełnoekranowa mapa rynku (Treemap) z aktualizacją cen na żywo.
+- **Inteligentne Kolory**: 
+    - Paleta `tab20` (żywe kolory).
+    - Spójność: Spółka na wykresie "Top 10" ma ten sam kolor co jej sektor na wykresie ogólnym.
+    - Unikalność: Każda spółka w Top 10 wyróżnia się własnym odcieniem.
+- **Wydajność**: Wielowątkowe pobieranie danych (threading) - GUI nie zamarza podczas odświeżania cen.
 
-## 📸 Zrzuty ekranu
+## 🛠️ Funkcje Główne
 
-### Analiza wg Spółek
-<img width="1401" height="929" alt="image" src="https://github.com/user-attachments/assets/bafd72fd-0c6b-4139-81f8-c3ec88ed7e4d" />
+- **Automatyzacja**: Samodzielne pobieranie cen (`yfinance`) i struktury portfela.
+- **Baza Danych**: SQLite z automatycznym backupem i cache'owaniem.
+- **Sortowanie i Filtrowanie**: Błyskawiczny podgląd największych i najmniejszych spółek.
+- **Heatmapa Rynku**: Wizualizacja "zielono/czerwono" pokazująca nastroje na rynku w czasie rzeczywistym.
 
-Wykres pokazuje TOP 12 spółek o największym udziale w indeksie sWIG80.
-<img width="1398" height="928" alt="image" src="https://github.com/user-attachments/assets/5d825aa5-17c2-45ef-9e0a-1d70d00757be" />
+## 📸 Interfejs
 
-### Analiza wg Sektorów
-Agregacja spółek według sektorów gospodarki (Budownictwo, IT, Nieruchomości, Medycyna, itd.).
+### 1. Skład Indeksu
+*Pełna lista spółek połączona z wykresem liderów.*
 
-## 🚀 Instalacja
+### 2. Sektory
+*Analiza strukturalna - które branże rządzą rynkiem (Banki, Budownictwo, Gaming).*
+
+### 3. Heatmapa
+*Szybki rzut oka na cały rynek - wielkość kafelka to udział w indeksie, kolor to zmiana ceny.*
+
+## 🚀 Instalacja i Uruchomienie
 
 ### Wymagania
-- Python 3.8+
-- Microsoft Edge (dla Selenium WebDriver)
-- Połączenie internetowe (do pierwszego pobrania danych)
+- Python 3.10+
+- Internet (do pobierania notowań)
 
-### Instalacja zależności
-
+### Instalacja
 ```bash
 pip install -r requirements.txt
 ```
 
-**requirements.txt:**
-```
-selenium
-webdriver-manager
-matplotlib
-requests
-beautifulsoup4
-```
+### Uruchomienie
+Wystarczy dwukrotnie kliknąć plik:
+`run_app.bat`
 
-## 💻 Użycie
-
-### Uruchomienie aplikacji
-
+Lub z konsoli:
 ```bash
 python main.py
 ```
 
-### Pierwsze uruchomienie
-- Program automatycznie pobierze dane z GPW Benchmark (otworzy przeglądarkę Edge)
-- Pobierze sektory dla wszystkich spółek (może potrwać 2-3 minuty)
-- Zapisze dane w lokalnej bazie SQLite (`wig_data.db`)
-
-### Kolejne uruchomienia
-- Program sprawdzi, czy nastąpiła kwartalna rewizja indeksu
-- Jeśli NIE - błyskawicznie wczyta dane z bazy (bez otwierania przeglądarki)
-- Jeśli TAK - pobierze świeże dane i zaktualizuje bazę
-
-## 📅 Harmonogram rewizji sWIG80
-
-Indeks sWIG80 jest rewidowany **4 razy w roku**:
-- **Trzeci piątek marca** (rewizja roczna)
-- **Trzeci piątek czerwca** (korekta kwartalna)
-- **Trzeci piątek września** (korekta kwartalna)
-- **Trzeci piątek grudnia** (korekta kwartalna)
-
-Program automatycznie wykrywa te daty i aktualizuje dane dzień po rewizji.
-
-## 🏗️ Architektura
+## 🏗️ Struktura Projektu (Clean Architecture)
 
 ```
 wig/
-├── main.py                 # Główny plik aplikacji (GUI + orkiestracja)
-├── fetch_gpw_debug.py      # Scraper GPW Benchmark (Selenium)
+├── main.py                 # Punkt startowy (GUI + Wątki)
+├── dashboard.py            # Logika interfejsu (Wykresy + Tabele)
+├── market_data.py          # Pobieranie danych (YFinance + Mapowania)
+├── visualizer.py           # Moduł Heatmapy
+├── database.py             # Obsługa bazy danych SQLite
 ├── sectors.py              # Logika klasyfikacji sektorowej
-├── database.py             # Obsługa SQLite (portfolio + sektory)
-├── scheduler.py            # Logika harmonogramu rewizji
-├── wig_data.db             # Baza danych SQLite (generowana automatycznie)
-└── README.md               # Ten plik
+├── wig_data.db             # Baza danych (auto-generowana)
+└── run_app.bat             # Skrypt startowy
 ```
-
-### Moduły
-
-#### `main.py`
-- Interfejs graficzny (Tkinter + Matplotlib)
-- Logika decyzyjna: cache vs. live fetch
-- Wizualizacja wykresów i tabel
-
-#### `fetch_gpw_debug.py`
-- Selenium WebDriver (Edge)
-- Pobieranie tabeli z GPW Benchmark
-- Ekstrakcja tickerów i udziałów procentowych
-
-#### `sectors.py`
-- Klasyfikacja sektorowa spółek
-- Priorytet: STATIC_SECTORS → Database → Live Scraping (BiznesRadar)
-- Mapowanie indeksów WIG-* na sektory
-
-#### `database.py`
-- Tabela `companies`: ticker → sektor
-- Tabela `portfolio`: ticker → udział %
-- Funkcje: init, save, load, bulk upsert
-
-#### `scheduler.py`
-- Obliczanie dat rewizji (3. piątek miesiąca)
-- Funkcja `should_update_portfolio()` - decyzja o aktualizacji
-
-## 🗄️ Baza danych
-
-### Tabela `companies`
-```sql
-CREATE TABLE companies (
-    ticker TEXT PRIMARY KEY,
-    sector TEXT,
-    updated_at TIMESTAMP
-);
-```
-
-### Tabela `portfolio`
-```sql
-CREATE TABLE portfolio (
-    ticker TEXT PRIMARY KEY,
-    share REAL,
-    updated_at TIMESTAMP
-);
-```
-
-## 🎨 Interfejs
-
-- **Dark Mode** - ciemny motyw (tło #2b2b2b)
-- **Zakładki**:
-  - "Analiza Wg Spółek" - wykres + tabela spółek
-  - "Analiza Wg Sektorów" - wykres + ranking sektorów
-- **Wykresy kołowe** (matplotlib) z automatycznym grupowaniem "Pozostałe"
-- **Tabele** (Tkinter Treeview) z sortowaniem wg udziału
-
-## 🔧 Konfiguracja
-
-### Zmiana sektorów (ręczne nadpisanie)
-Edytuj `STATIC_SECTORS` w `sectors.py`:
-
-```python
-STATIC_SECTORS = {
-    "TICKER": "Nazwa Sektoru",
-    # ...
-}
-```
-
-### Zmiana mapowania WIG-* → Sektor
-Edytuj `INDEX_TO_SECTOR` w `sectors.py`:
-
-```python
-INDEX_TO_SECTOR = {
-    "WIG-BANKI": "Finanse",
-    "WIG-BUDOW": "Budownictwo",
-    # ...
-}
-```
-
-## 🐛 Rozwiązywanie problemów
-
-### Program nie pobiera danych
-- Sprawdź połączenie internetowe
-- Upewnij się, że Edge jest zainstalowany
-- Usuń `wig_data.db` i uruchom ponownie
-
-### Błędne sektory
-- Sprawdź `STATIC_SECTORS` w `sectors.py`
-- Usuń `wig_data.db` aby wymusić ponowne pobranie
-
-### Błędne udziały procentowe
-- Usuń `wig_data.db`
-- Sprawdź, czy GPW Benchmark nie zmienił struktury tabeli
-
-## 📝 Licencja
-
-MIT License - możesz swobodnie używać, modyfikować i dystrybuować ten kod.
 
 ## 👨‍💻 Autor
-
-Projekt stworzony do analizy polskiego rynku akcji małych spółek (sWIG80).
-
-## 🔗 Linki
-
-- [GPW Benchmark - sWIG80](https://gpwbenchmark.pl/karta-indeksu?isin=PL9999999060)
-- [BiznesRadar](https://www.biznesradar.pl/)
-- [GPW - Giełda Papierów Wartościowych](https://www.gpw.pl/)
+Projekt rozwijany przez **Wneq1**. 
+Skupiony na analizie technicznej i fundamentalnej polskich spółek giełdowych.
 
 ---
-
-**Wersja:** 1.0  
+**Wersja:** 2.0 (Premium)
 **Data ostatniej aktualizacji:** 2026-01-28
