@@ -30,10 +30,23 @@ def init_db():
         CREATE TABLE IF NOT EXISTS portfolio (
             ticker TEXT PRIMARY KEY,
             share REAL,
+            price REAL,
+            change_pct REAL,
             updated_at TIMESTAMP
         )
     ''')
     
+    # Check if new columns exist (migration for existing DB)
+    try:
+        c.execute('ALTER TABLE portfolio ADD COLUMN price REAL')
+    except sqlite3.OperationalError:
+        pass # Columns already exist
+        
+    try:
+        c.execute('ALTER TABLE portfolio ADD COLUMN change_pct REAL')
+    except sqlite3.OperationalError:
+        pass
+
     conn.commit()
     conn.close()
 
@@ -86,7 +99,7 @@ def bulk_upsert_sectors(data_dict):
             updated_at=excluded.updated_at
     ''', params)
     
-    conn.commit() # Fixed indentation logic in replacement
+    conn.commit()
     conn.close()
 
 # --- PORTFOLIO FUNCTIONS ---
@@ -95,7 +108,7 @@ def save_portfolio_snapshot(data_list):
     """
     Saves the full portfolio list to DB.
     Replaces existing cache (we assume we want the current state).
-    data_list: list of dicts {'ticker': ..., 'share': ...}
+    data_list: list of dicts {'ticker': ..., 'share': ..., 'price': ..., 'change_pct': ...}
     """
     conn = get_connection()
     c = conn.cursor()
@@ -106,11 +119,17 @@ def save_portfolio_snapshot(data_list):
     
     params = []
     for item in data_list:
-        params.append((item['ticker'], item.get('share', 0.0), now))
+        params.append((
+            item['ticker'], 
+            item.get('share', 0.0), 
+            item.get('price', 0.0), 
+            item.get('change_pct', 0.0), 
+            now
+        ))
         
     c.executemany('''
-        INSERT INTO portfolio (ticker, share, updated_at)
-        VALUES (?, ?, ?)
+        INSERT INTO portfolio (ticker, share, price, change_pct, updated_at)
+        VALUES (?, ?, ?, ?, ?)
     ''', params)
     
     conn.commit()
@@ -119,14 +138,14 @@ def save_portfolio_snapshot(data_list):
 def load_portfolio_from_db():
     """
     Loads portfolio from DB and joins with sectors.
-    Returns list of dicts: {'ticker', 'share', 'sector'}
+    Returns list of dicts: {'ticker', 'share', 'sector', 'price', 'change_pct'}
     """
     conn = get_connection()
     c = conn.cursor()
     
     # Left join to get sectors if available
     c.execute('''
-        SELECT p.ticker, p.share, c.sector 
+        SELECT p.ticker, p.share, p.price, p.change_pct, c.sector 
         FROM portfolio p
         LEFT JOIN companies c ON p.ticker = c.ticker
     ''')
@@ -138,6 +157,8 @@ def load_portfolio_from_db():
         result.append({
             'ticker': r['ticker'],
             'share': r['share'],
+            'price': r['price'] if r['price'] else 0.0,
+            'change_pct': r['change_pct'] if r['change_pct'] else 0.0,
             'sector': r['sector'] if r['sector'] else 'Inne / Nieznany'
         })
     return result

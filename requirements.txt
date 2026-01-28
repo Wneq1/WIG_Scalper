@@ -3,3 +3,5 @@ webdriver-manager
 matplotlib
 requests
 beautifulsoup4
+yfinance
+squarify
