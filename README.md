@@ -33,14 +33,10 @@ Pełna lista spółek połączona z wykresem liderów. Tabelaryczny podgląd cen
 
 <img width="1396" height="925" alt="image" src="https://github.com/user-attachments/assets/41727d51-bd28-4033-92c1-8cd7bbc90c9c" />
 
-*(Miejsce na Twój screenshot)*
-
 ### 2. Sektory
 Analiza strukturalna - które branże rządzą rynkiem (Banki, Budownictwo, Gaming). Lewa strona to wykres kołowy, prawa to szczegółowa lista.
 
 <img width="1396" height="930" alt="image" src="https://github.com/user-attachments/assets/87a7258d-3f12-4dd9-a347-dd71b12578a2" />
-
-*(Miejsce na Twój screenshot)*
 
 ### 3. Heatmapa (Nowość!)
 Pełnoekranowa **Mapa Rynku**.
@@ -48,8 +44,6 @@ Pełnoekranowa **Mapa Rynku**.
 - **Kolor**: Zmiana ceny (Zielony = Wzrost, Czerwony = Spadek).
 
 <img width="1396" height="924" alt="image" src="https://github.com/user-attachments/assets/cec98b40-8a5a-46a0-ace4-c00f071c9776" />
-
-*(Miejsce na Twój screenshot)*
 
 ## 🚀 Instalacja i Uruchomienie
 
