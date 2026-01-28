@@ -1,0 +1,5 @@
+selenium
+webdriver-manager
+matplotlib
+requests
+beautifulsoup4

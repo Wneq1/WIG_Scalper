@@ -1,0 +1,33 @@
+# Database files
+wig_data.db
+*.db
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Virtual environment
+venv/
+env/
+ENV/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Debug files
+*.html
+debug_*.txt
+*.log
+
+# Temporary files
+temp/
+tmp/
