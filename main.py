@@ -1,6 +1,6 @@
 from fetch_gpw_debug import fetch_gpw_data
 from sectors import enrich_data_with_sectors
-from database import init_db, save_portfolio_snapshot, load_portfolio_from_db, get_last_portfolio_date
+from database import init_db, save_portfolio_snapshot, load_portfolio_from_db, get_last_portfolio_date, bulk_upsert_sectors
 from scheduler import should_update_portfolio
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
@@ -249,7 +249,11 @@ def main():
             # 1.2 Wzbogacanie o sektory (AI / Cache / Static)
             data = enrich_data_with_sectors(raw_data)
             
-            # 1.3 Zapis do bazy (Snapshot portfela)
+            # 1.3 Zapis sektorów do bazy (companies table)
+            sectors_dict = {company['ticker']: company['sector'] for company in data}
+            bulk_upsert_sectors(sectors_dict)
+            
+            # 1.4 Zapis do bazy (Snapshot portfela)
             save_portfolio_snapshot(data)
             print(">>> Dane zaktualizowane i zapisane w bazie danych.")
             
@@ -259,6 +263,19 @@ def main():
     else:
         print(f">>> Dane w bazie są aktualne (z dnia {last_update}). Wczytuję z SQLite (błyskawicznie).")
         data = load_portfolio_from_db()
+        
+        # Sprawdzamy czy mamy sektory w bazie - jeśli nie, wzbogacamy dane
+        missing_sectors = [company for company in data if company.get('sector') == 'Inne / Nieznany']
+        
+        if missing_sectors:
+            print(f">>> Brak sektorów dla {len(missing_sectors)} spółek. Uzupełniam...")
+            # Wzbogacamy wszystkie dane o sektory
+            data = enrich_data_with_sectors(data)
+            
+            # Zapisujemy sektory do bazy
+            sectors_dict = {company['ticker']: company['sector'] for company in data}
+            bulk_upsert_sectors(sectors_dict)
+            print(">>> Sektory zaktualizowane i zapisane.")
     
     if data:
         create_gui(data)

@@ -84,7 +84,7 @@ def bulk_upsert_sectors(data_dict):
         ON CONFLICT(ticker) DO UPDATE SET
             sector=excluded.sector,
             updated_at=excluded.updated_at
-    ''', (params)) # Fix: params is already a list, executemany takes it directly
+    ''', params)
     
     conn.commit() # Fixed indentation logic in replacement
     conn.close()

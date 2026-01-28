@@ -215,8 +215,8 @@ def get_sector(ticker):
     # 0. Static overrides (fixing issues with unidentified sectors)
     # Jeśli mamy zdefiniowane na sztywno - ufamy temu bezwarunkowo.
     if ticker in STATIC_SECTORS:
-        # Opcjonalnie: możemy zaktualizować bazę tym statycznym wpisem, żeby był "spójny"
-        # save_sector_to_db(ticker, STATIC_SECTORS[ticker]) 
+        # Zapisujemy do bazy, żeby sektor był dostępny przy kolejnym uruchomieniu
+        save_sector_to_db(ticker, STATIC_SECTORS[ticker]) 
         return STATIC_SECTORS[ticker]
 
     # 1. Sprawdzamy w bazie danych SQLite
