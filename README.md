@@ -22,7 +22,10 @@ Aplikacja do analizy składu indeksu **sWIG80** z automatycznym pobieraniem dany
 ## 📸 Zrzuty ekranu
 
 ### Analiza wg Spółek
+<img width="1401" height="929" alt="image" src="https://github.com/user-attachments/assets/bafd72fd-0c6b-4139-81f8-c3ec88ed7e4d" />
+
 Wykres pokazuje TOP 12 spółek o największym udziale w indeksie sWIG80.
+<img width="1398" height="928" alt="image" src="https://github.com/user-attachments/assets/5d825aa5-17c2-45ef-9e0a-1d70d00757be" />
 
 ### Analiza wg Sektorów
 Agregacja spółek według sektorów gospodarki (Budownictwo, IT, Nieruchomości, Medycyna, itd.).
