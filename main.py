@@ -74,6 +74,15 @@ def create_gui(data):
     notebook.add(tab_sectors, text="Analiza Wg Sektorów")
     create_sector_view(tab_sectors, data, bg_color)
     
+    # Obsługa zamknięcia okna - zatrzymanie programu
+    def on_closing():
+        print("Zamykanie programu...")
+        root.destroy()
+        import sys
+        sys.exit(0)
+    
+    root.protocol("WM_DELETE_WINDOW", on_closing)
+    
     print("Okno GUI otwarte.")
     root.mainloop()
 

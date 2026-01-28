@@ -43,6 +43,7 @@ STATIC_SECTORS = {
     "MCR": "Budownictwo", 
     "PEKABEX": "Budownictwo",
     "TIM": "Budownictwo",
+    "SNIEZKA": "Budownictwo",  # Farby i lakiery
 
     # Przemysł / Produkcja
     "APATOR": "Przemysł",
@@ -53,8 +54,12 @@ STATIC_SECTORS = {
     "AMICA": "Przemysł",
     "COGNOR": "Przemysł",
     "ARCTIC": "Przemysł",
-    "WIELTON": "Przemysł", # Motoryzacja de facto, ale często Przemysł
+    "WIELTON": "Przemysł",
     "MANGATA": "Przemysł",
+    "PCCROKITA": "Chemia",
+    "CLNPHARMA": "Medycyna",  # Pharma
+    
+    # Spożywczy
     "WAWEL": "Spożywczy",
     "TARCZYNSKI": "Spożywczy",
     "AMBRA": "Spożywczy",
@@ -77,7 +82,7 @@ STATIC_SECTORS = {
     "RYVU": "Medycyna",
     "BIOCELTIX": "Medycyna",
     "CAPTORTX": "Medycyna",
-    "SCPFL": "Medycyna", # Scope Fluidics
+    "SCPFL": "Medycyna",
     "MEDICALG": "Medycyna",
     "SNTVERSE": "Medycyna",
     "BIOTON": "Medycyna",
@@ -89,13 +94,14 @@ STATIC_SECTORS = {
     "OPONEO.PL": "Handel",
     "TOYA": "Handel",
     "DADELO": "Handel",
-    "WITTCHEN": "Odzież", # Handel/Odzież
+    "WITTCHEN": "Odzież",
     "VRG": "Odzież",
+    "AGORA": "Media",  # Wydawnictwo/Media
     
     # Usługi / Inne
-    "ENTER": "Usługi", # Lotnictwo
-    "STALEXP": "Uslugi", # Infrastruktura
-    "RAINBOW": "Usługi", # Turystyka
+    "ENTER": "Usługi",
+    "STALEXP": "Usługi",
+    "RAINBOW": "Usługi",
     "BENEFIT": "Usługi", 
     
     # Gaming
@@ -106,7 +112,7 @@ STATIC_SECTORS = {
     "11BIT": "Gaming",
     "PCFGROUP": "Gaming",
 
-    # Energia / Paliwa
+    # Energia / Paliwa / Górnictwo
     "KOGENERA": "Energetyka",
     "ZEPAK": "Energetyka",
     "UNIMOT": "Paliwa",
@@ -115,12 +121,11 @@ STATIC_SECTORS = {
     "BOGDANKA": "Górnictwo",
     "BUMECH": "Górnictwo",
     "GREENX": "Górnictwo",
+    "ACAUTOGAZ": "Paliwa",
     
     # Motoryzacja
     "SANOK": "Motoryzacja",
-    "ACAUTOGAZ": "Motoryzacja",
-    "AUTO": "Motoryzacja", # Partner
-    "INTERCARS": "Motoryzacja"
+    "ARLEN": "Motoryzacja",
 }
 
 # Mapowanie indeksów sektorowych GPW na czytelne nazwy
