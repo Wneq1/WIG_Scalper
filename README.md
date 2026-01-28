@@ -8,8 +8,8 @@ Profesjonalna platforma analityczna dla indeksu **sWIG80** (small caps) oraz sze
 
 ## 🌟 Nowości w wersji 2.0
 
-- **Nowoczesny UI (Dark Theme)**: Spójny, profesjonalny ciemny motyw (`#2b2b2b`).
-- **3 Dedykowane Zakładki**:
+- **Nowoczesny UI (Dark Theme)**: Spójny, profesjonalny ciemny motyw.
+- **Dedykowane Zakładki**:
    -  **Skład Indeksu**: Tabela wszystkich spółek + Wykres "Top 10" (kolorowany sektorowo).
    -  **Sektory**: Struktura całego indeksu + Tabela spółek posortowana sektorami.
    -  **Heatmapa**: Pełnoekranowa mapa rynku (Treemap) z aktualizacją cen na żywo.
